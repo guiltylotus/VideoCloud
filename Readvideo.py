@@ -16,8 +16,8 @@ frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
 
 # Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
-out = cv2.VideoWriter('outpy.avi', cv2.VideoWriter_fourcc(
-    'M', 'J', 'P', 'G'), 10, (frame_width, frame_height))
+# out = cv2.VideoWriter('outpy.avi', cv2.VideoWriter_fourcc(
+#     'M', 'J', 'P', 'G'), 10, (frame_width, frame_height))
 count = 0
 
 while(True):
@@ -26,12 +26,12 @@ while(True):
     if ret == True:
 
         # Write the frame into the file 'output.avi'
-        out.write(frame)
+        # out.write(frame)
         # Cloud Detect
-        # if (count <= 1):
-        #     threshold = Kmean(frame)
-        if (count <= 1):
-            threshold = Kmean(frame)  
+        if (count < 1):
+            threshold = Kmean(frame)
+        # if (count > 1 and count % 100 == 0):
+        #     threshold = Kmean(frame)  
             # threshold = Process(target=Kmean, args=(frame,)).start()
             # print('threshold', threshold)
         CloudFrame = CloudThreshold(frame, threshold)

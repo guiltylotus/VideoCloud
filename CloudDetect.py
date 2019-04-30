@@ -18,7 +18,7 @@ def Kmean(frame):
     Z = img.reshape((-1, 3))
     Z = np.float32(Z)
 
-    iterations = 100
+    iterations = 10
     epsilon = 1.0
 
     criteria = (cv2.TERM_CRITERIA_EPS +
