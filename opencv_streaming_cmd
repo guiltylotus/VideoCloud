@@ -33,3 +33,25 @@ gst-launch-1.0 filesrc location=hncloud.mp4 ! decodebin ! x264enc tune=zerolaten
 Receiver:
 
 cap = cv2.VideoCapture('udpsrc port=5000 caps="application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, payload=(int)96" ! rtph264depay ! decodebin ! videoconvert ! appsink', cv2.CAP_GSTREAMER)
+
+
+_______________________TCP
+Sender:
+
+gst-launch-1.0 filesrc location=hncloud.mp4 ! decodebin ! x264enc ! mpegtsmux ! queue ! tcpserversink host=192.168.1.2 port=5000 recover-policy=keyframe sync-method=latest-keyframe sync=false
+
+Receiver:
+    __Opencv:
+        cap = cv2.VideoCapture("tcp://192.168.1.2:5000")
+
+    __Gst:
+        gst-launch-1.0 tcpclientsrc host=127.0.0.1 port=7001 ! decodebin ! videoconvert ! autovideosink sync=false
+
+
+H265:
+gst-launch-1.0 filesrc location=hncloud.mp4 ! decodebin ! omxh265enc ! mpegtsmux ! tcpserversink host=192.168.1.2 port=5000
+
+_______________________RTSP
+Sender:
+
+./test-mp4 hncloud.mp4
